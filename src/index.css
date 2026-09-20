@@ -24,7 +24,8 @@ html {
 
 body {
     margin: 0;
-    background: var(--paper)
+    background: #f7f4ee;
+    color: var(--ink)
 }
 
 a {
@@ -42,20 +43,25 @@ textarea {
     overflow: hidden
 }
 
+main {
+    width: 100%;
+    margin: 0 auto
+}
+
 .site-header {
     height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 5.5vw;
-    border-bottom: 1px solid var(--line);
+    padding: 0 4vw;
+    border-bottom: 1px solid rgba(28, 30, 28, 0.08);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
-    background: rgba(243, 240, 233, 0.92);
-    backdrop-filter: blur(8px);
+    background: rgba(247, 244, 238, 0.88);
+    backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -75,8 +81,10 @@ textarea {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 27px;
-    font-size: 12px
+    gap: 2vw;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase
 }
 
 .nav-links>a:not(.nav-cta) {
@@ -172,12 +180,15 @@ textarea {
 }
 
 .section-pad {
-    padding-left: 10.5vw;
-    padding-right: 10.5vw
+    padding-left: clamp(1.5rem, 3.5vw, 5rem);
+    padding-right: clamp(1.5rem, 3.5vw, 5rem)
 }
 
 .hero {
     min-height: 100vh;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
     padding-top: 72px;
     display: flex;
     align-items: center;
@@ -185,20 +196,22 @@ textarea {
     position: relative;
     background-image: linear-gradient(rgba(8, 10, 12, 0.62), rgba(8, 10, 12, 0.7)), url('/CEI.jpg');
     background-size: cover;
-    background-position: center 42%;
+    background-position: center center;
     background-repeat: no-repeat;
+    background-attachment: scroll;
     filter: saturate(0.8) contrast(1.15) brightness(0.75);
     color: #fff;
 }
 
 .hero-copy {
-    max-width: 760px;
+    max-width: 1200px;
+    width: min(100%, 1200px);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8vh 0 12vh;
+    padding: 15vh 4vw 12vh;
     animation: rise-in .8s ease both;
 }
 
@@ -220,6 +233,8 @@ textarea {
     height: auto;
     margin-bottom: -60px;
     filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25));
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .eyebrow {
@@ -231,20 +246,50 @@ textarea {
     margin-bottom: 22px
 }
 
+.section-main-label {
+    font-family: 'DM Mono', monospace;
+    color: var(--orange);
+    font-size: clamp(2rem, 3.8vw, 3.8rem);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+    display: block;
+    font-weight: 700;
+}
+
 .hero h1,
 .page-intro h1 {
-    font-size: clamp(4.5rem, 9vw, 8.7rem);
+    font-size: clamp(5.5rem, 10vw, 10rem);
     font-weight: 500;
-    line-height: .88;
-    letter-spacing: -.07em;
+    line-height: .82;
+    letter-spacing: -.08em;
     margin: 0
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .08em;
+    width: min(100%, 900px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-line {
+    display: block;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .hero h1 em,
 .page-intro h1 em,
 h2 em {
     font-style: normal;
-    color: var(--orange)
+    color: var(--orange);
+    font-size: 1.22em;
+    line-height: 0.9;
+    display: inline-block;
 }
 
 .hero-text {
@@ -256,12 +301,12 @@ h2 em {
 }
 
 .hero-subtext {
-    margin: 18px 0 0;
+    margin: 22px 0 0;
     font-family: 'DM Mono', monospace;
-    font-size: 18px;
-    letter-spacing: 0.12em;
+    font-size: 12px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.8);
     text-align: center;
 }
 
@@ -273,15 +318,16 @@ h2 em {
 }
 
 .club-intro {
-    padding-top: 64px;
-    padding-bottom: 32px;
+    padding-top: 96px;
+    padding-bottom: 96px;
     background: rgba(255, 255, 255, 0.15);
+    text-align: left;
 }
 
 .club-intro-layout {
     display: grid;
-    grid-template-columns: 1.4fr 0.8fr;
-    gap: 40px;
+    grid-template-columns: 1.45fr 0.8fr;
+    gap: 52px;
     align-items: center;
 }
 
@@ -290,19 +336,24 @@ h2 em {
     margin: 0;
 }
 
-.club-intro .eyebrow {
+.club-intro-label {
     margin-bottom: 18px;
-    font-size: 2.2rem;
-    letter-spacing: 0.14em;
+    font-family: 'DM Mono', monospace;
+    color: var(--orange);
+    font-size: clamp(3rem, 5vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    font-weight: 500;
 }
 
-.club-intro h2 {
+.club-intro-text {
     margin: 0;
-    font-size: clamp(2rem, 3vw, 3.2rem);
-    line-height: 1.18;
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    line-height: 1.15;
     letter-spacing: -0.04em;
     font-weight: 500;
     color: var(--ink);
+    max-width: 1000px;
 }
 
 .club-intro-image {
@@ -500,11 +551,16 @@ h2 em {
 .section-heading h2,
 .home-cta h2,
 .dark-band h2 {
-    font-size: clamp(3.2rem, 6vw, 6rem);
+    font-size: clamp(3.2rem, 5.3vw, 5.8rem);
     font-weight: 500;
-    line-height: .92;
+    line-height: .9;
     letter-spacing: -.06em;
     margin: 0
+}
+
+h2 em {
+    font-size: 1.24em;
+    display: inline-block;
 }
 
 .statement h2 span {
@@ -535,9 +591,10 @@ h2 em {
 }
 
 .project-preview {
-    padding-top: 90px;
-    padding-bottom: 120px;
-    border-top: 1px solid var(--line)
+    padding-top: 110px;
+    padding-bottom: 130px;
+    border-top: 1px solid var(--line);
+    text-align: left;
 }
 
 .section-heading {
@@ -548,35 +605,42 @@ h2 em {
 }
 
 .section-heading h2 {
-    font-size: clamp(3rem, 5vw, 5rem)
+    font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    margin-top: 0;
+    color: var(--ink);
 }
 
 .project-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
+    gap: 22px;
     align-items: stretch
 }
 
 .project-card {
-    padding: 25px 20px 25px 0;
-    border-bottom: 1px solid var(--line);
-    min-height: 300px;
+    padding: 28px 24px 24px;
+    border: 1px solid var(--line);
+    min-height: 315px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    transition: transform .25s
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    background: rgba(255, 255, 255, 0.4)
 }
 
 .project-card+.project-card {
-    padding-left: 25px;
-    padding-right: 0;
+    padding-left: 24px;
+    padding-right: 24px;
     border-left: 1px solid var(--line)
 }
 
 .project-card:hover {
-    transform: translateY(-6px)
+    transform: translateY(-6px);
+    border-color: rgba(241, 90, 41, 0.45);
+    box-shadow: 0 18px 32px rgba(29, 38, 34, 0.06)
 }
 
 .project-card:hover .arrow {
@@ -603,17 +667,35 @@ h2 em {
 }
 
 .project-card h3 {
-    font-size: 25px;
+    font-size: 31px;
     font-weight: 500;
     margin: 12px 0
+}
+
+.project-card h3,
+.row-copy h2,
+.about-story h2,
+.sponsor-opportunity h2,
+.sponsor-thanks h2,
+.contact-layout h2 {
+    color: var(--ink)
+}
+
+.project-card h3:hover,
+.row-copy h2:hover,
+.about-story h2:hover,
+.sponsor-opportunity h2:hover,
+.sponsor-thanks h2:hover,
+.contact-layout h2:hover {
+    color: var(--ink)
 }
 
 .project-card p,
 .row-copy p {
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
-    max-width: 280px
+    max-width: 300px
 }
 
 .project-card>.arrow {
@@ -634,7 +716,10 @@ h2 em {
 .page-intro {
     padding-top: 120px;
     padding-bottom: 100px;
-    max-width: 1100px
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .page-intro p {
@@ -651,7 +736,8 @@ h2 em {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 9vw;
-    padding-bottom: 130px
+    padding-bottom: 130px;
+    text-align: center;
 }
 
 .about-photo {
@@ -836,7 +922,8 @@ h2 em {
     grid-column: 1 / -1;
     border-top: 1px solid var(--line);
     padding-top: 120px;
-    padding-bottom: 105px
+    padding-bottom: 105px;
+    text-align: center;
 }
 
 .sponsor-thanks h2 {
@@ -998,7 +1085,8 @@ h2 em {
     gap: 8vw;
     padding-top: 120px;
     padding-bottom: 110px;
-    border-top: 1px solid var(--line)
+    border-top: 1px solid var(--line);
+    text-align: center;
 }
 
 .sponsor-opportunity h2 {
@@ -1065,7 +1153,8 @@ h2 em {
     display: grid;
     grid-template-columns: 1.2fr .8fr;
     gap: 30px;
-    padding-bottom: 130px
+    padding-bottom: 130px;
+    text-align: center;
 }
 
 .gallery-item {

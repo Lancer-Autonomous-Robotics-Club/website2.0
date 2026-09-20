@@ -89,20 +89,23 @@ function Home({ navigate }) {
         <section className="hero section-pad">
             <div className="hero-copy">
                 <img src="/LARC Logo.png" alt="LARC logo" className="hero-logo" />
-                <h1>Lancer Autonomous Robotics Club</h1>
+                <h1 className="hero-title">
+                    <span className="hero-line">Lancer Autonomous</span>
+                    <span className="hero-line">Robotics Club</span>
+                </h1>
                 <p className="hero-subtext">Build the Future</p>
             </div>
         </section>
         <section className="club-intro section-pad">
             <div className="club-intro-layout">
                 <div className="club-intro-copy">
-                    <div className="eyebrow">LARC</div>
-                    <h2>Founded in 2026, the Lancer Autonomous Robotics Club is the innovative robotics student led group at the University of Windsor.</h2>
+                    <div className="club-intro-label">LARC</div>
+                    <p className="club-intro-text">Founded in 2026, the Lancer Autonomous Robotics Club is the innovative robotics student led group at the University of Windsor.</p>
                 </div>
                 <div className="club-intro-image" aria-label="LARC logo"></div>
             </div>
         </section>
-        <section className="project-preview section-pad"><div className="section-heading"><div><div className="eyebrow">Meet the teams</div><h2>LARC subteams</h2></div><a className="text-link" href="#Projects">All teams <Arrow /></a></div><div className="project-grid">{projects.map(project => <article className="project-card" key={project.number} onClick={() => navigate(project.title)}><span className="project-number">{project.number}</span><div><span className="project-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p></div><Arrow /></article>)}</div></section>
+        <section className="project-preview section-pad"><div className="section-heading"><div><div className="section-main-label">Meet the teams</div><h2>LARC subteams</h2></div><a className="text-link" href="#Projects">All teams <Arrow /></a></div><div className="project-grid">{projects.map(project => <article className="project-card" key={project.number} onClick={() => navigate(project.title)}><span className="project-number">{project.number}</span><div><span className="project-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p></div><Arrow /></article>)}</div></section>
     </>
 }
 
