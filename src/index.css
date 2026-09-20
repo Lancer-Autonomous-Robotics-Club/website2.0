@@ -66,9 +66,9 @@ textarea {
 
 .logo-image {
     display: block;
-    height: 120px;
+    height: 58px;
     width: auto;
-    max-width: 500px;
+    max-width: 190px;
     object-fit: contain;
 }
 
@@ -86,6 +86,71 @@ textarea {
 .nav-links>a:hover,
 .nav-links .active {
     color: var(--ink)
+}
+
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center
+}
+
+.nav-dropdown-trigger,
+.dropdown-toggle {
+    color: #696c65;
+    font-size: inherit
+}
+
+.dropdown-toggle {
+    background: transparent;
+    border: 0;
+    padding: 0 0 0 3px;
+    cursor: pointer
+}
+
+.nav-dropdown-trigger:hover,
+.nav-dropdown-trigger.active,
+.dropdown-toggle:hover {
+    color: var(--ink)
+}
+
+.dropdown-chevron {
+    color: var(--orange);
+    font-size: 15px;
+    margin-left: 3px
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 18px);
+    right: -16px;
+    display: grid;
+    min-width: 190px;
+    padding: 9px 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 24px rgba(28, 30, 28, .08);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
+    transition: opacity .2s, transform .2s
+}
+
+.nav-dropdown.open .dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0)
+}
+
+.dropdown-menu a {
+    padding: 10px 16px;
+    color: #696c65;
+    white-space: nowrap
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a.active {
+    color: var(--ink);
+    background: rgba(241, 90, 41, .08)
 }
 
 .nav-cta {
@@ -120,7 +185,7 @@ textarea {
     position: relative;
     background-image: linear-gradient(rgba(8, 10, 12, 0.62), rgba(8, 10, 12, 0.7)), url('/CEI.jpg');
     background-size: cover;
-    background-position: center center;
+    background-position: center 42%;
     background-repeat: no-repeat;
     filter: saturate(0.8) contrast(1.15) brightness(0.75);
     color: #fff;
@@ -133,7 +198,20 @@ textarea {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 6vh 0;
+    padding: 8vh 0 12vh;
+    animation: rise-in .8s ease both;
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
 }
 
 .hero-logo {
@@ -230,8 +308,22 @@ h2 em {
 .club-intro-image {
     min-height: 280px;
     border: 1px solid rgba(28, 30, 28, 0.18);
-    background: linear-gradient(135deg, rgba(241, 90, 41, 0.08), rgba(28, 30, 28, 0.04));
-    border-radius: 18px;
+    background: #e8e4da url('/LARC Logo.png') center / min(72%, 330px) auto no-repeat;
+    background-blend-mode: multiply;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.club-intro-image::after {
+    content: 'FIELD NOTES / 01';
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
 }
 
 .button {
@@ -487,6 +579,15 @@ h2 em {
     transform: translateY(-6px)
 }
 
+.project-card:hover .arrow {
+    color: var(--orange);
+    transform: translate(3px, -3px)
+}
+
+.project-card .arrow {
+    transition: transform .25s, color .25s
+}
+
 .project-number {
     font-family: 'DM Mono', monospace;
     color: var(--orange);
@@ -725,7 +826,208 @@ h2 em {
 }
 
 .sponsor-layout {
-    padding-bottom: 140px
+    padding-bottom: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8vw
+}
+
+.sponsor-thanks {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding-top: 120px;
+    padding-bottom: 105px
+}
+
+.sponsor-thanks h2 {
+    font-size: clamp(2.7rem, 4.5vw, 4.8rem);
+    font-weight: 500;
+    line-height: .94;
+    letter-spacing: -.06em;
+    margin: 0 0 22px
+}
+
+.sponsor-thanks h2 em {
+    font-style: normal;
+    color: var(--orange)
+}
+
+.sponsor-thanks p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 390px
+}
+
+.sponsor-package-intro,
+.sponsor-funding,
+.sponsor-kind,
+.sponsor-contact {
+    padding-bottom: 105px
+}
+
+.sponsor-package-intro h2,
+.sponsor-funding h2,
+.sponsor-tier-table h2,
+.sponsor-kind h2,
+.sponsor-contact h2 {
+    font-size: clamp(2.7rem, 4.5vw, 4.8rem);
+    font-weight: 500;
+    line-height: .94;
+    letter-spacing: -.06em;
+    margin: 0 0 28px
+}
+
+.sponsor-package-intro h2 em,
+.sponsor-funding h2 em,
+.sponsor-tier-table h2 em,
+.sponsor-kind h2 em,
+.sponsor-contact h2 em {
+    font-style: normal;
+    color: var(--orange)
+}
+
+.sponsor-package-intro h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 30px 0 10px
+}
+
+.sponsor-package-intro p,
+.sponsor-funding p,
+.sponsor-kind p,
+.sponsor-contact p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 440px
+}
+
+.sponsor-funding ul,
+.sponsor-tier-row ul {
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7
+}
+
+.sponsor-funding li+li {
+    margin-top: 14px
+}
+
+.sponsor-funding strong {
+    color: var(--ink)
+}
+
+.sponsor-tier-table {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding-top: 30px;
+    padding-bottom: 105px
+}
+
+.sponsor-tier-header,
+.sponsor-tier-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2.2fr;
+    gap: 25px;
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0
+}
+
+.sponsor-tier-header {
+    color: var(--orange);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase
+}
+
+.sponsor-tier-row>strong {
+    font-size: 19px;
+    font-weight: 500
+}
+
+.sponsor-tier-row>strong:nth-child(2) {
+    color: var(--orange)
+}
+
+.sponsor-tier-row ul {
+    margin: 0
+}
+
+.sponsor-kind,
+.sponsor-contact {
+    border-top: 1px solid var(--line);
+    padding-top: 30px
+}
+
+.sponsor-contact a:not(.button) {
+    color: var(--orange);
+    text-decoration: underline;
+    text-underline-offset: 3px
+}
+
+.sponsor-contact .button {
+    margin-top: 18px
+}
+
+.sponsor-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 42px
+}
+
+.sponsor-logo-placeholder {
+    min-height: 104px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    color: #a0a198;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em
+}
+
+.sponsor-opportunity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8vw;
+    padding-top: 120px;
+    padding-bottom: 110px;
+    border-top: 1px solid var(--line)
+}
+
+.sponsor-opportunity h2 {
+    font-size: clamp(2.7rem, 4.5vw, 4.8rem);
+    font-weight: 500;
+    line-height: .94;
+    letter-spacing: -.06em;
+    margin: 0
+}
+
+.sponsor-opportunity h2 em {
+    font-style: normal;
+    color: var(--orange)
+}
+
+.sponsor-opportunity-copy {
+    align-self: end;
+    max-width: 410px
+}
+
+.sponsor-opportunity-copy p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 16px
+}
+
+.sponsor-opportunity-copy .button {
+    margin-top: 18px
 }
 
 .sponsor-copy h2 {
@@ -893,6 +1195,61 @@ h2 em {
     font-size: 10px
 }
 
+.pdf-viewer-page {
+    padding-top: 120px;
+    padding-bottom: 80px
+}
+
+.pdf-viewer-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 35px
+}
+
+.pdf-viewer-heading h1 {
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    font-weight: 500;
+    line-height: .88;
+    letter-spacing: -.07em;
+    margin: 0
+}
+
+.pdf-viewer-heading h1 em {
+    color: var(--orange);
+    font-style: normal
+}
+
+.pdf-viewer-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px
+}
+
+.pdf-viewer-frame {
+    min-height: 78vh;
+    border: 1px solid var(--line);
+    background: #d9d5cb;
+    position: relative
+}
+
+.pdf-viewer-frame iframe {
+    display: block;
+    width: 100%;
+    height: 78vh;
+    border: 0
+}
+
+.pdf-viewer-frame p {
+    display: none;
+    position: absolute;
+    inset: 40% 20px auto;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px
+}
+
 @media(max-width:800px) {
     .site-header {
         height: 76px;
@@ -926,6 +1283,47 @@ h2 em {
 
     .nav-links.open {
         display: flex
+    }
+
+    .nav-dropdown {
+        width: 100%
+    }
+
+    .nav-dropdown-trigger,
+    .dropdown-toggle {
+        padding: 0;
+        font-size: 12px
+    }
+
+    .dropdown-toggle {
+        padding-left: 6px
+    }
+
+    .dropdown-menu {
+        position: static;
+        min-width: 0;
+        margin-top: 14px;
+        padding: 0 0 0 14px;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
+        opacity: 1;
+        pointer-events: none;
+        transform: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .2s
+    }
+
+    .nav-dropdown.open .dropdown-menu {
+        pointer-events: auto;
+        max-height: 150px
+    }
+
+    .dropdown-menu a {
+        display: block;
+        padding: 7px 0;
+        font-size: 12px
     }
 
     .nav-cta {
@@ -1016,7 +1414,33 @@ h2 em {
         padding-bottom: 70px
     }
 
+    .pdf-viewer-page {
+        padding-top: 110px;
+        padding-bottom: 50px
+    }
+
+    .pdf-viewer-heading {
+        display: block;
+        margin-bottom: 28px
+    }
+
+    .pdf-viewer-heading h1 {
+        font-size: clamp(4rem, 18vw, 7rem)
+    }
+
+    .pdf-viewer-actions {
+        margin-top: 28px;
+        justify-content: space-between
+    }
+
+    .pdf-viewer-frame,
+    .pdf-viewer-frame iframe {
+        min-height: 72vh;
+        height: 72vh
+    }
+
     .about-content,
+    .sponsor-opportunity,
     .sponsor-layout,
     .contact-layout {
         display: block;
@@ -1077,6 +1501,44 @@ h2 em {
         margin-top: 65px
     }
 
+    .sponsor-opportunity {
+        gap: 0;
+        padding-top: 110px;
+        padding-bottom: 80px
+    }
+
+    .sponsor-opportunity-copy {
+        margin-top: 38px
+    }
+
+    .sponsor-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 32px
+    }
+
+    .sponsor-thanks {
+        padding-bottom: 75px
+    }
+
+    .sponsor-package-intro,
+    .sponsor-funding,
+    .sponsor-kind,
+    .sponsor-contact,
+    .sponsor-tier-table {
+        padding-bottom: 75px
+    }
+
+    .sponsor-tier-header,
+    .sponsor-tier-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px
+    }
+
+    .sponsor-tier-header span:last-child,
+    .sponsor-tier-row ul {
+        grid-column: 1 / -1
+    }
+
     .gallery-grid {
         display: block;
         padding-bottom: 90px
@@ -1110,4 +1572,9 @@ h2 em {
     .site-footer>span {
         display: block
     }
+}
+
+.site-footer .logo-image {
+    filter: brightness(0) invert(1);
+    opacity: .9
 }

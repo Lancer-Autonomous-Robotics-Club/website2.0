@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const pages = ['Home', 'About Us', 'Projects', 'Sponsor', 'Gallery', 'Contact Us']
+const pages = ['Home', 'About Us', 'Sponsor', 'Gallery', 'Contact Us']
 
 const projects = [
     { number: '01', title: 'Autonomous Vehicle', tag: 'Ground robotics', text: 'A resilient all-terrain platform built to map, navigate, and make decisions beyond the driver station.' },
@@ -22,14 +22,18 @@ function Logo() {
 function Arrow() { return <span className="arrow">↗</span> }
 
 function App() {
-    const [page, setPage] = useState(window.location.hash.slice(1) || 'Home')
+    const [page, setPage] = useState(decodeURIComponent(window.location.hash.slice(1)) || 'Home')
     const [menuOpen, setMenuOpen] = useState(false)
+    const [teamsOpen, setTeamsOpen] = useState(false)
+    const [sponsorOpen, setSponsorOpen] = useState(false)
 
     useEffect(() => {
         const onHashChange = () => {
-            setPage(window.location.hash.slice(1) || 'Home')
+            setPage(decodeURIComponent(window.location.hash.slice(1)) || 'Home')
             window.scrollTo({ top: 0, behavior: 'smooth' })
             setMenuOpen(false)
+            setTeamsOpen(false)
+            setSponsorOpen(false)
         }
         window.addEventListener('hashchange', onHashChange)
         return () => window.removeEventListener('hashchange', onHashChange)
@@ -42,7 +46,22 @@ function App() {
             <Logo />
             <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? 'Close' : 'Menu'} <span>☰</span></button>
             <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>
-                {pages.map(item => <a key={item} className={page === item ? 'active' : ''} href={`#${item}`}>{item}</a>)}
+                {pages.slice(0, 2).map(item => <a key={item} className={page === item ? 'active' : ''} href={`#${item}`}>{item}</a>)}
+                <div className={`nav-dropdown ${teamsOpen ? 'open' : ''}`}>
+                    <a className={`nav-dropdown-trigger ${page === 'Projects' || page.includes('Vehicle') ? 'active' : ''}`} href="#Projects">Teams</a>
+                    <button className="dropdown-toggle" onClick={() => { setTeamsOpen(!teamsOpen); setSponsorOpen(false) }} aria-label="Toggle Teams menu" aria-expanded={teamsOpen}><span className="dropdown-chevron">⌄</span></button>
+                    <div className="dropdown-menu">
+                        {projects.map(project => <a key={project.title} className={page === project.title ? 'active' : ''} href={`#${project.title}`}>{project.title}</a>)}
+                    </div>
+                </div>
+                <div className={`nav-dropdown ${sponsorOpen ? 'open' : ''}`}>
+                    <a className={`nav-dropdown-trigger ${page === 'Sponsor' || page === 'Sponsorship Package' ? 'active' : ''}`} href="#Sponsor">Sponsor</a>
+                    <button className="dropdown-toggle" onClick={() => { setSponsorOpen(!sponsorOpen); setTeamsOpen(false) }} aria-label="Toggle Sponsor menu" aria-expanded={sponsorOpen}><span className="dropdown-chevron">⌄</span></button>
+                    <div className="dropdown-menu">
+                        <a className={page === 'Sponsorship Package' ? 'active' : ''} href="#Sponsorship Package">Sponsorship Package</a>
+                    </div>
+                </div>
+                {pages.slice(3).map(item => <a key={item} className={page === item ? 'active' : ''} href={`#${item}`}>{item}</a>)}
             </nav>
         </header>
         <main>
@@ -51,8 +70,9 @@ function App() {
             {page === 'Projects' && <Projects navigate={navigate} />}
             {page === 'Sponsor' && <Sponsor navigate={navigate} />}
             {page === 'Gallery' && <Gallery navigate={navigate} />}
+            {page === 'Sponsorship Package' && <SponsorshipPackage />}
             {page === 'Contact Us' && <Contact />}
-            {page === 'Ground robotics' && <UnderConstruction title="Ground Robotics" />}
+            {page === 'Autonomous Vehicle' && <UnderConstruction title="Autonomous Vehicle" />}
             {page === 'Aerial Vehicle' && <UnderConstruction title="Aerial Vehicle" />}
             {page === 'Aquatic Vehicle' && <UnderConstruction title="Aquatic Vehicle" />}
         </main>
@@ -79,10 +99,10 @@ function Home({ navigate }) {
                     <div className="eyebrow">LARC</div>
                     <h2>Founded in 2026, the Lancer Autonomous Robotics Club is the innovative robotics student led group at the University of Windsor.</h2>
                 </div>
-                <div className="club-intro-image" aria-label="Image placeholder"></div>
+                <div className="club-intro-image" aria-label="LARC logo"></div>
             </div>
         </section>
-        <section className="project-preview section-pad"><div className="section-heading"><div><div className="eyebrow">Meet the teams</div><h2>LARC subteams</h2></div><a className="text-link" href="#Projects">All projects <Arrow /></a></div><div className="project-grid">{projects.map(project => <article className="project-card" key={project.number} onClick={() => navigate(project.title)}><span className="project-number">{project.number}</span><div><span className="project-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p></div><Arrow /></article>)}</div></section>
+        <section className="project-preview section-pad"><div className="section-heading"><div><div className="eyebrow">Meet the teams</div><h2>LARC subteams</h2></div><a className="text-link" href="#Projects">All teams <Arrow /></a></div><div className="project-grid">{projects.map(project => <article className="project-card" key={project.number} onClick={() => navigate(project.title)}><span className="project-number">{project.number}</span><div><span className="project-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p></div><Arrow /></article>)}</div></section>
     </>
 }
 
@@ -95,15 +115,37 @@ function TeamDetail({ title, subtitle, text }) {
 }
 
 function UnderConstruction({ title }) {
-    return <section className="page-intro section-pad"><div className="eyebrow">Coming soon</div><h1>{title}</h1><p>Under construction.</p><a className="button button-dark" href="#Projects">Back to projects <Arrow /></a></section>
+    return <section className="page-intro section-pad"><div className="eyebrow">Coming soon</div><h1>{title}</h1><p>Under construction.</p><a className="button button-dark" href="#Home">Back to home page <Arrow /></a></section>
 }
 
 function Projects({ navigate }) { return <><PageIntro eyebrow="What we make" title={<>Ideas with<br /><em>momentum.</em></>} copy="From the first sketch to the final field test, every project is a chance to make the invisible feel possible." /><section className="projects-list section-pad">{projects.map((project, index) => <article className={`project-row row-${index + 1}`} key={project.number}><div className="row-art"><span>{project.number}</span><div className="mini-orbit"></div></div><div className="row-copy"><span className="project-tag">{project.tag}</span><h2>{project.title}</h2><p>{project.text}</p><a className="text-link" href={`#${project.title}`}>Explore team <Arrow /></a></div></article>)}</section><section className="dark-band section-pad"><div className="eyebrow">Want to build with us?</div><h2>The next system<br /><em>starts with a question.</em></h2><a className="button button-orange" href="#Contact Us">Get in touch <Arrow /></a></section></> }
 
-function Sponsor({ navigate }) { return <><PageIntro eyebrow="Power the possible" title={<>Back the<br /><em>breakthrough.</em></>} copy="The right partnership does more than put a logo on a banner. It gives students the tools, trust, and runway to build work that matters." /><section className="sponsor-layout section-pad"><div className="sponsor-copy"><div className="eyebrow">Why partner with LARC</div><h2>Invest in the<br />next generation<br /><em>of makers.</em></h2><p>Your support fuels materials, competition travel, technical workshops, and the kind of hands-on learning that stays with students long after graduation.</p><a className="button button-dark" href="#Contact Us">Become a sponsor <Arrow /></a></div><div className="sponsor-tiers"><div><span>01</span><h3>Partner</h3><p>Support a project and help us get from prototype to proof.</p></div><div><span>02</span><h3>Collaborator</h3><p>Share your expertise, facilities, or a problem worth solving.</p></div><div><span>03</span><h3>Launch partner</h3><p>Make a lasting investment in the future of robotics at Windsor.</p></div></div></section></> }
+function Sponsor() {
+    return <>
+        <section className="sponsor-opportunity section-pad">
+            <div><div className="eyebrow">A sponsorship opportunity</div><h2>Help us turn<br /><em>curiosity into motion.</em></h2></div>
+            <div className="sponsor-opportunity-copy"><p>Partner with LARC to support hands-on engineering, ambitious student projects, and the next generation of robotics talent at the University of Windsor.</p><p>Our sponsorship packages are designed for organizations that want to invest in meaningful technical experience and build a relationship with a growing team.</p><a className="button button-orange" href="#Sponsorship Package">Sponsorship package <Arrow /></a></div>
+        </section>
+        <section className="sponsor-layout section-pad">
+            <div className="sponsor-thanks"><div className="eyebrow">With gratitude</div><h2>Thank you to our<br /><em>sponsors.</em></h2><p>Your support helps us build, test, learn, and take ambitious ideas further.</p><div className="sponsor-logo-grid" aria-label="Sponsor logos"><div className="sponsor-logo-placeholder">Sponsor logo</div><div className="sponsor-logo-placeholder">Sponsor logo</div><div className="sponsor-logo-placeholder">Sponsor logo</div><div className="sponsor-logo-placeholder">Sponsor logo</div></div></div>
+        </section>
+    </>
+}
 
 function Gallery({ navigate }) { return <><PageIntro eyebrow="The archive" title={<>A lot can happen<br /><em>in the lab.</em></>} copy="A living record of late nights, first tests, small wins, and the people who make it all worthwhile." /><section className="gallery-grid section-pad">{gallery.map(item => <figure className={`gallery-item ${item.className}`} key={item.label}><div className="gallery-image"><span>✦</span></div><figcaption>{item.label}</figcaption></figure>)}</section></> }
 
-function Contact() { return <><PageIntro eyebrow="Come say hello" title={<>Let's make<br /><em>something move.</em></>} copy="Whether you want to join, collaborate, sponsor, or simply ask a very specific robotics question, our inbox is open." /><section className="contact-layout section-pad"><div><div className="eyebrow">Find us</div><h2>University of Windsor<br />Essex Hall · Room 312</h2><p>Windsor, Ontario<br />Canada N9B 3P4</p><a className="text-link" href="mailto:lancerrobotics@uwindsor.ca">lancerrobotics@uwindsor.ca <Arrow /></a></div><form onSubmit={event => event.preventDefault()}><label>Name<input type="text" placeholder="Your name" /></label><label>Email<input type="email" placeholder="you@email.com" /></label><label>Message<textarea rows="4" placeholder="Tell us what you are thinking about..."></textarea></label><button className="button button-orange" type="submit">Send a note <Arrow /></button></form></section></> }
+function SponsorshipPackage() {
+    const pdfPath = '/sponsorship-package.pdf'
+
+    return <section className="pdf-viewer-page section-pad">
+        <div className="pdf-viewer-heading">
+            <div><div className="eyebrow">Partnership package</div><h1>Sponsorship<br /><em>package.</em></h1></div>
+            <div className="pdf-viewer-actions"><a className="button button-dark" href={pdfPath} target="_blank" rel="noreferrer">Open PDF <Arrow /></a><a className="text-link" href={pdfPath} download>Download <Arrow /></a></div>
+        </div>
+        <div className="pdf-viewer-frame"><iframe src={pdfPath} title="LARC sponsorship package PDF"></iframe><p>Place the sponsorship package PDF at <strong>public/sponsorship-package.pdf</strong> to display it here.</p></div>
+    </section>
+}
+
+function Contact() { return <><PageIntro eyebrow="Come say hello" title={<>Let's make<br /><em>something move.</em></>} copy="Whether you want to join, collaborate, sponsor, or simply ask a very specific robotics question, our inbox is open." /><section className="contact-layout section-pad"><div><div className="eyebrow">Find us</div><h2>University of Windsor</h2><p>Windsor, Ontario<br />Canada</p><a className="text-link" href="mailto:larc@uwindsor.ca">larc@uwindsor.ca <Arrow /></a></div><form onSubmit={event => event.preventDefault()}><label>Name<input type="text" placeholder="Your name" /></label><label>Email<input type="email" placeholder="you@email.com" /></label><label>Message<textarea rows="4" placeholder="Tell us what you are thinking about..."></textarea></label><button className="button button-orange" type="submit">Send a note <Arrow /></button></form></section></> }
 
 export default App
